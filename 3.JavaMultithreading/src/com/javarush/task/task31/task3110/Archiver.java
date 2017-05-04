@@ -4,13 +4,11 @@ import com.javarush.task.task31.task3110.exception.WrongZipFileException;
 
 import java.io.IOException;
 
-/**
- * Created by engelsun on 5/4/2017.
- */
 public class Archiver {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
+
         Operation operation = null;
-        while (operation != Operation.EXIT) {
+        do {
             try {
                 operation = askOperation();
                 CommandExecutor.execute(operation);
@@ -19,8 +17,10 @@ public class Archiver {
             } catch (Exception e) {
                 ConsoleHelper.writeMessage("Произошла ошибка. Проверьте введенные данные.");
             }
-        }
+
+        } while (operation != Operation.EXIT);
     }
+
 
     public static Operation askOperation() throws IOException {
         ConsoleHelper.writeMessage("");
