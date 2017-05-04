@@ -1,27 +1,37 @@
 package com.javarush.task.task31.task3110;
 
-import com.javarush.task.task31.task3110.command.ExitCommand;
+import com.javarush.task.task31.task3110.exception.WrongZipFileException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.io.IOException;
 
 /**
  * Created by engelsun on 5/4/2017.
  */
 public class Archiver {
     public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Operation operation = null;
+        while (operation != Operation.EXIT) {
+            try {
+                operation = askOperation();
+                CommandExecutor.execute(operation);
+            } catch (WrongZipFileException e) {
+                ConsoleHelper.writeMessage("Вы не выбрали файл архива или выбрали неверный файл.");
+            } catch (Exception e) {
+                ConsoleHelper.writeMessage("Произошла ошибка. Проверьте введенные данные.");
+            }
+        }
+    }
 
-        System.out.println("Enter an absolute path to archive");
-        String pathToZipFile = reader.readLine();
-        ZipFileManager zipFileManager = new ZipFileManager(Paths.get(pathToZipFile));
+    public static Operation askOperation() throws IOException {
+        ConsoleHelper.writeMessage("");
+        ConsoleHelper.writeMessage("Выберите операцию:");
+        ConsoleHelper.writeMessage(String.format("\t %d - упаковать файлы в архив", Operation.CREATE.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - добавить файл в архив", Operation.ADD.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - удалить файл из архива", Operation.REMOVE.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - распаковать архив", Operation.EXTRACT.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - просмотреть содержимое архива", Operation.CONTENT.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - выход", Operation.EXIT.ordinal()));
 
-        System.out.println("Enter an absolute path to the file which you wish to archive");
-        String pathToFile = reader.readLine();
-        zipFileManager.createZip(Paths.get(pathToFile));
-
-        ExitCommand exitCommand = new ExitCommand();
-        exitCommand.execute();
+        return Operation.values()[ConsoleHelper.readInt()];
     }
 }
