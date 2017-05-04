@@ -18,6 +18,5 @@ public class Archiver {
         System.out.println("Enter an absolute path to the file which you wish to archive");
         String pathToFile = reader.readLine();
         zipFileManager.createZip(Paths.get(pathToFile));
-
     }
 }
