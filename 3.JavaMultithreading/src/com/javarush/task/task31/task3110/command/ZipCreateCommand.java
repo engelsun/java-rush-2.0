@@ -7,9 +7,6 @@ import com.javarush.task.task31.task3110.exception.PathIsNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by engelsun on 5/4/2017.
- */
 public class ZipCreateCommand extends ZipCommand {
     @Override
     public void execute() throws Exception {
@@ -23,6 +20,7 @@ public class ZipCreateCommand extends ZipCommand {
             zipFileManager.createZip(sourcePath);
 
             ConsoleHelper.writeMessage("Архив создан.");
+
         } catch (PathIsNotFoundException e) {
             ConsoleHelper.writeMessage("Вы неверно указали имя файла или директории.");
         }
