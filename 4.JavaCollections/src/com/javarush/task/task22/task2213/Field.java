@@ -28,6 +28,16 @@ public class Field {
 
     public void print() {
 
+        for (int i = 0; i < getHeight(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                if (getValue(j, i) == 0)
+                    System.out.print(".");
+                else
+                    System.out.print("X");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     public void removeFullLines() {
@@ -35,10 +45,10 @@ public class Field {
     }
 
     public Integer getValue(int x, int y) {
-        return 0;
+        return matrix[y][x];
     }
 
     public void setValue(int x, int y, int value) {
-
+        matrix[y][x] = value;
     }
 }
