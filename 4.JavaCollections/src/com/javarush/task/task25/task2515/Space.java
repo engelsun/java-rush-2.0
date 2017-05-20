@@ -46,6 +46,17 @@ public class Space {
         this.ship = ship;
     }
 
+    public void run() {
+
+    }
+
+    public void draw() {
+
+    }
+
+    public void sleep(int ms) {
+
+    }
     public static void main(String[] args) {
 
     }
