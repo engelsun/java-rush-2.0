@@ -11,7 +11,7 @@ public class Canvas {
     public Canvas(int width, int height) {
         this.width = width;
         this.height = height;
-        matrix = new char[height][width];
+        matrix = new char[height + 2][width + 2];
     }
 
     public int getWidth() {
@@ -42,5 +42,20 @@ public class Canvas {
                 }
             }
         }
+    }
+
+    public void clear() {
+        matrix = new char[height + 2][width + 2];
+    }
+
+    public void print() {
+        for (int i = 0; i < height + 2; i++) {
+            for (int j = 0; j < width + 2; j++) {
+                System.out.println(matrix[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
     }
 }
