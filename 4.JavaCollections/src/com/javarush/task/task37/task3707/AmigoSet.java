@@ -10,6 +10,7 @@ import java.util.*;
  * Created by engelsun on 5/25/2017.
  */
 public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Serializable, Cloneable {
+    private static final long serialVersionUID = 633702251448929159L;
     private final static Object PRESENT = new Object();
     private transient HashMap<E, Object> map;
 
@@ -65,7 +66,7 @@ public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Serializable,
             return amigoSetClone;
         }
         catch (Exception e){
-            throw new InternalError();
+            throw new InternalError(e);
         }
     }
 
