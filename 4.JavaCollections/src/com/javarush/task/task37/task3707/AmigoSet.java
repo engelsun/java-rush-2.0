@@ -15,28 +15,28 @@ public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Serializable,
     }
 
     public AmigoSet(Collection<? extends E> collection) {
-        map = new HashMap<>(Math.max(16, (int)(collection.size() / .75f + 1)));
+        map = new HashMap<>(Math.max(16, (int) (collection.size() / .75f + 1)));
         this.addAll(collection);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return map.keySet().iterator();
     }
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return super.isEmpty();
+        return map.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return super.contains(o);
+        return map.containsKey(o);
     }
 
     @Override
@@ -46,7 +46,12 @@ public class AmigoSet<E> extends AbstractSet<E> implements Set<E>, Serializable,
 
     @Override
     public boolean remove(Object o) {
-        return super.remove(o);
+        return map.remove(o) == PRESENT;
+    }
+
+    @Override
+    public void clear() {
+        map.clear();
     }
 
     @Override
