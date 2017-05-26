@@ -7,7 +7,7 @@ import com.javarush.task.task36.task3608.model.ModelData;
 /**
  * Created by engelsun on 5/26/2017.
  */
-public class UsersView implements View {
+public class EditUserView implements View {
     private Controller controller;
 
     public void setController(Controller controller) {
@@ -16,20 +16,9 @@ public class UsersView implements View {
 
     @Override
     public void refresh(ModelData modelData) {
-        if (modelData.isDisplayDeletedUserList()) System.out.println("All deleted users:");
-        else System.out.println("All users:");
-        for (User user :
-                modelData.getUsers()) {
-            System.out.println("\t" + user);
-        }
+        System.out.println("User to be edited:");
+        User user = modelData.getActiveUser();
+        System.out.println("\t" + user);
         System.out.println("===================================================");
-    }
-
-    public void fireEventShowAllUsers() {
-        controller.onShowAllUsers();
-    }
-
-    public void fireEventShowDeletedUsers() {
-        controller.onShowAllDeletedUsers();
     }
 }
