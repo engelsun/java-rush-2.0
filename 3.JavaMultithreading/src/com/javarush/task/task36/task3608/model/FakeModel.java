@@ -22,4 +22,9 @@ public class FakeModel implements Model {
         users.add(new User("b", 2, 3));
         modelData.setUsers(users);
     }
+
+    @Override
+    public void loadDeletedUsers() {
+        throw new UnsupportedOperationException();
+    }
 }
