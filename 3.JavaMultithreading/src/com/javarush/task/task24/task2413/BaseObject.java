@@ -1,9 +1,9 @@
 package com.javarush.task.task24.task2413;
 
 /**
- * Created by enki2160 on 5/26/2017.
+ * Created by engelsun on 5/26/2017.
  */
-public class BaseObject {
+public abstract class BaseObject {
     private double x;
     private double y;
     private double radius;
@@ -36,5 +36,17 @@ public class BaseObject {
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    public abstract void  draw(Canvas canvas);
+
+    public abstract void move();
+
+    public boolean isIntersec(BaseObject o) {
+        double x = this.x - o.x;
+        double y = this.y - o.y;
+        double distanceBetweenObjects = Math.sqrt(x * x + y * y);
+        double maxRadiusBetweenObjects = Math.max(this.radius, o.radius);
+        return distanceBetweenObjects < maxRadiusBetweenObjects;
     }
 }
