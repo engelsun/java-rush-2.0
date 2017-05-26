@@ -1,11 +1,16 @@
 package com.javarush.task.task24.task2413;
 
+import java.util.List;
+
 /**
  * Created by engelsun on 5/25/2017.
  */
 public class Arkanoid {
     private int width;
     private int height;
+    private Ball ball;
+    private Stand stand;
+    private List<Brick> bricks;
 
     public Arkanoid(int width, int height) {
         this.width = width;
@@ -26,6 +31,30 @@ public class Arkanoid {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
+
+    public Stand getStand() {
+        return stand;
+    }
+
+    public void setStand(Stand stand) {
+        this.stand = stand;
+    }
+
+    public List<Brick> getBricks() {
+        return bricks;
+    }
+
+    public void setBricks(List<Brick> bricks) {
+        this.bricks = bricks;
     }
 
     public static void main(String[] args) {
