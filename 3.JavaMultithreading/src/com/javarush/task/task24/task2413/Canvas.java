@@ -42,7 +42,7 @@ public class Canvas {
         int roundX = (int) Math.round(x);
         int roundY = (int) Math.round(y);
 
-        if (roundX > 0 && roundX < matrix[0].length && roundY > 0 && roundY < matrix.length) {
+        if (roundX >= 0 && roundX < matrix[0].length && roundY >= 0 && roundY < matrix.length) {
             matrix[roundY][roundX] = c;
         }
     }
@@ -55,5 +55,20 @@ public class Canvas {
                 }
             }
         }
+    }
+
+    public void clear() {
+        matrix = new char[height + 2][width + 2];
+    }
+
+    public void print() {
+        for (int i = 0; i < height + 2; i++) {
+            for (int j = 0; j < width + 2; j++) {
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
     }
 }
