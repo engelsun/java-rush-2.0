@@ -21,4 +21,8 @@ public class EditUserView implements View {
         System.out.println("\t" + user);
         System.out.println("===================================================");
     }
+
+    public void fireEventUserDeleted(long id) {
+        controller.onUserDelete(id);
+    }
 }
