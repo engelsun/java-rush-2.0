@@ -1,7 +1,6 @@
 package com.javarush.task.task29.task2909.human;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class University {
     private String name;
@@ -37,17 +36,53 @@ public class University {
         this.students = students;
     }
 
-    public Student getStudentWithAverageGrade() {
+    public Student getStudentWithAverageGrade(double averageGrade) {
         //TODO:
+        for (Student student :
+                students) {
+            if (student.getAverageGrade() == averageGrade) return student;
+        }
         return null;
     }
 
-    public Student getStudentWithMaxAverageGrade(double averageGrade) {
-        //TODO:
-        return null;
+//    public static void main(String[] args) {
+//        List<Student> students = new ArrayList<>();
+//        students.add(new Student("ann", 23, 94.7));
+//        students.add(new Student("nik", 23, 94.8));
+//        students.add(new Student("gas", 23, 99.0));
+//        students.add(new Student("tom", 23, 100));
+//        students.add(new Student("tom2", 23, 101));
+//        students.stream().forEach(Student::printData);
+//        System.out.println("==========================================");
+//        University university = new University("oxford", 223);
+//        university.setStudents(students);
+//        Student studentAverage = university.getStudentWithAverageGrade(99);
+//        studentAverage.printData();
+//        Student studentMax = university.getStudentWithMaxAverageGrade();
+//        studentMax.printData();
+//        System.out.println("==========================================");
+//        Student studentMin = university.getStudentWithMinAverageGrade();
+//        studentMin.printData();
+//        university.expel(studentMin);
+//        System.out.println("==========================================");
+//        students.stream().forEach(Student::printData);
+//    }
+
+    public Student getStudentWithMaxAverageGrade() {
+        Student student = students.stream()
+                .max(Comparator.comparingDouble(Student::getAverageGrade))
+                .get();
+        return student;
     }
 
-    public void getStudentWithMinAverageGradeAndExpel() {
-        //TODO:
+    public Student getStudentWithMinAverageGrade() {
+        Student student = students.stream()
+                .min(Comparator.comparingDouble(Student::getAverageGrade))
+                .get();
+        return student;
+    }
+
+    public void expel(Student student) {
+        students.remove(student);
     }
 }
