@@ -46,16 +46,16 @@ public class University {
     }
 
 //    public static void main(String[] args) {
-//        List<Student> students = new ArrayList<>();
-//        students.add(new Student("ann", 23, 94.7));
-//        students.add(new Student("nik", 23, 94.8));
-//        students.add(new Student("gas", 23, 99.0));
-//        students.add(new Student("tom", 23, 100));
-//        students.add(new Student("tom2", 23, 101));
-//        students.stream().forEach(Student::printData);
+//        List<Student> studentList = new ArrayList<>();
+//        studentList.add(new Student("ann", 23, 94.7));
+//        studentList.add(new Student("nik", 23, 94.8));
+//        studentList.add(new Student("gas", 23, 99.0));
+//        studentList.add(new Student("tom", 23, 100));
+//        studentList.add(new Student("tom2", 23, 101));
+//        studentList.stream().forEach(Student::printData);
 //        System.out.println("==========================================");
 //        University university = new University("oxford", 223);
-//        university.setStudents(students);
+//        university.setStudents(studentList);
 //        Student studentAverage = university.getStudentWithAverageGrade(99);
 //        studentAverage.printData();
 //        Student studentMax = university.getStudentWithMaxAverageGrade();
@@ -65,15 +65,14 @@ public class University {
 //        studentMin.printData();
 //        university.expel(studentMin);
 //        System.out.println("==========================================");
-//        students.stream().forEach(Student::printData);
+//        studentList.stream().forEach(Student::printData);
 //        System.out.println("==========================================");
 //        Date begin = new Date(2010, 9, 1);
 //        Date end = new Date(2016, 6, 1);
-//        Student student = new Student("marshall", 21, 95);
-//        student.setBeginningOfSession(begin);
-//        student.setEndOfSession(end);
-//        System.out.println(student.getBeginningOfSession());
-//        System.out.println(student.getEndOfSession());
+//        StudentsDataBase.students.addAll(studentList);
+//        StudentsDataBase.removeStudent(4);
+//        StudentsDataBase.students.stream().forEach(Student::printData);
+//
 //    }
 
     public Student getStudentWithMaxAverageGrade() {
