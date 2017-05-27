@@ -1,8 +1,5 @@
 package com.javarush.task.task29.task2909.human;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Teacher extends UniversityPerson {
     private int numberOfStudents;
 
@@ -20,7 +17,8 @@ public class Teacher extends UniversityPerson {
     public void teach() {
     }
 
-    public void printData() {
-        System.out.println("Преподаватель: " + name);
+    @Override
+    public String getPosition() {
+        return "Преподаватель";
     }
 }
