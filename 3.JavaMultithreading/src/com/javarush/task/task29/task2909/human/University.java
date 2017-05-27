@@ -66,6 +66,14 @@ public class University {
 //        university.expel(studentMin);
 //        System.out.println("==========================================");
 //        students.stream().forEach(Student::printData);
+//        System.out.println("==========================================");
+//        Date begin = new Date(2010, 9, 1);
+//        Date end = new Date(2016, 6, 1);
+//        Student student = new Student("marshall", 21, 95);
+//        student.setBeginningOfSession(begin);
+//        student.setEndOfSession(end);
+//        System.out.println(student.getBeginningOfSession());
+//        System.out.println(student.getEndOfSession());
 //    }
 
     public Student getStudentWithMaxAverageGrade() {
