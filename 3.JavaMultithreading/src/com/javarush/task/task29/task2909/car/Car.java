@@ -7,13 +7,12 @@ public abstract class Car {
     public static final int SEDAN = 1;
     public static final int CABRIOLET = 2;
 
+    private int type;
     double fuel;
 
     public double summerFuelConsumption;
     public double winterFuelConsumption;
     public double winterWarmingUp;
-
-    private int type;
 
     private boolean driverAvailable;
     private int numberOfPassengers;

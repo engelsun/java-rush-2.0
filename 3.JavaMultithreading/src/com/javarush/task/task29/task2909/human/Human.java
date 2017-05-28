@@ -18,22 +18,17 @@ public class Human implements Alive {
     protected Size size;
 
     private List<Human> children = new ArrayList<>();
-
     private BloodGroup bloodGroup;
-
-    public BloodGroup getBloodGroup() {
-        return bloodGroup;
-    }
-
-    public void setBloodGroup(BloodGroup bloodGroup) {
-        this.bloodGroup = bloodGroup;
-    }
 
     public Human(String name, int age) {
         this.name = name;
         this.age = age;
         this.id = nextId;
         nextId++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getAge() {
@@ -52,10 +47,6 @@ public class Human implements Alive {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void printSize() {
         System.out.println("Рост: " + size.height + " Вес: " + size.weight);
     }
@@ -70,6 +61,14 @@ public class Human implements Alive {
 
     public void removeChild(Human human) {
         children.remove(human);
+    }
+
+    public BloodGroup getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(BloodGroup bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
     @Override
