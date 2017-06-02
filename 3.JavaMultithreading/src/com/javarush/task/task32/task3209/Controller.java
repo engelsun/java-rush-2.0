@@ -4,6 +4,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
+import java.io.StringReader;
 
 /**
  * Created by engelsun on 6/1/2017.
@@ -39,6 +40,17 @@ public class Controller {
         document = (HTMLDocument) htmlEditorKit.createDefaultDocument();
         document.addUndoableEditListener(view.getUndoListener());
         view.update();
+    }
+
+    public void setPlainText(String text) {
+        resetDocument();
+        StringReader reader = new StringReader(text);
+        HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+        try {
+            htmlEditorKit.read(reader, document, 0);
+        } catch (Exception e) {
+            ExceptionHandler.log(e);
+        }
     }
 
     public void init() {
