@@ -1,6 +1,5 @@
 package com.javarush.task.task32.task3209;
 
-import javax.swing.event.DocumentListener;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
@@ -29,8 +28,28 @@ public class Controller {
         controller.init();
     }
 
+    public void init() {
+
+    }
+
     public HTMLDocument getDocument() {
         return document;
+    }
+
+    public void createNewDocument() {
+
+    }
+
+    public void openDocument() {
+
+    }
+
+    public void saveDocument() {
+
+    }
+
+    public void saveDocumentAs() {
+
     }
 
     public void resetDocument() {
@@ -63,10 +82,6 @@ public class Controller {
             ExceptionHandler.log(e);
         }
         return writer.toString();
-    }
-
-    public void init() {
-
     }
 
     public void exit() {
