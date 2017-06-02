@@ -94,17 +94,21 @@ public class View extends JFrame implements ActionListener{
         pack();
     }
 
-
-    public void selectedTabChanged() {
-
-    }
-
     public void update() {
         htmlTextPane.setDocument(controller.getDocument());
     }
 
     public void showAbout() {
         JOptionPane.showMessageDialog(null, "HTML редактор", null, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void selectedTabChanged() {
+        if (tabbedPane.getSelectedIndex() == 0) {
+            controller.setPlainText(plainTextPane.getText());
+        } else if (tabbedPane.getSelectedIndex() == 1){
+            plainTextPane.setText(controller.getPlainText());
+        }
+        resetUndo();
     }
 
     public void selectHtmlTab(){
