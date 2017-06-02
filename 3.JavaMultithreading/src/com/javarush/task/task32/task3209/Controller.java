@@ -5,6 +5,7 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.File;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 /**
  * Created by engelsun on 6/1/2017.
@@ -51,6 +52,17 @@ public class Controller {
         } catch (Exception e) {
             ExceptionHandler.log(e);
         }
+    }
+
+    public String getPlainText() {
+        StringWriter writer = new StringWriter();
+        HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+        try {
+            htmlEditorKit.write(writer, document, 0, document.getLength());
+        } catch (Exception e) {
+            ExceptionHandler.log(e);
+        }
+        return writer.toString();
     }
 
     public void init() {
