@@ -119,7 +119,7 @@ public class View extends JFrame implements ActionListener{
     }
 
     public void showAbout() {
-        JOptionPane.showMessageDialog(null, "HTML редактор", null, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "примитивный HTML редактор, который смахивает на текстовый", "html editor", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void selectedTabChanged() {
