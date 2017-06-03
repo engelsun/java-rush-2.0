@@ -1,7 +1,6 @@
 package com.javarush.task.task32.task3209;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import java.io.*;
@@ -45,11 +44,40 @@ public class Controller {
     }
 
     public void openDocument() {
+        try {
+            view.selectHtmlTab();
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.setFileFilter(new HTMLFileFilter());
+            jFileChooser.setDialogTitle("Open File");
 
+            int state = jFileChooser.showOpenDialog(view);
+            if (state == JFileChooser.APPROVE_OPTION) {
+                currentFile = jFileChooser.getSelectedFile();
+                resetDocument();
+                view.setTitle(currentFile.getName());
+                try (Reader reader = new FileReader(currentFile)) {
+                    new HTMLEditorKit().read(reader, document, 0);
+                }
+                view.resetUndo();
+            }
+        } catch (Exception e) {
+            ExceptionHandler.log(e);
+        }
     }
 
     public void saveDocument() {
-
+        try {
+            view.selectHtmlTab();
+            if (currentFile != null) {
+                try (FileWriter writer = new FileWriter(currentFile)) {
+                    new HTMLEditorKit().write(writer, document, 0, document.getLength());
+                }
+            } else {
+                saveDocumentAs();
+            }
+        } catch (Exception e) {
+            ExceptionHandler.log(e);
+        }
     }
 
     public void saveDocumentAs() {
@@ -63,7 +91,7 @@ public class Controller {
             if (state == JFileChooser.APPROVE_OPTION) {
                 currentFile = jFileChooser.getSelectedFile();
                 view.setTitle(currentFile.getName());
-                try (FileWriter writer = new FileWriter(currentFile)) {
+                try (Writer writer = new FileWriter(currentFile)) {
                     new HTMLEditorKit().write(writer, document, 0, document.getLength());
                 }
             }
