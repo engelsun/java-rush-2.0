@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by engelsun on 6/12/2017.
  */
 public class HashMapStorageStrategy implements StorageStrategy {
-    private HashMap<Long, String> data;
+    private Map<Long, String> data = new HashMap<>();
 
     @Override
     public boolean containsKey(Long key) {
