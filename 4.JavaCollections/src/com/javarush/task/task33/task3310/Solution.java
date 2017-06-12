@@ -1,6 +1,7 @@
 package com.javarush.task.task33.task3310;
 
 import com.javarush.task.task33.task3310.strategy.HashMapStorageStrategy;
+import com.javarush.task.task33.task3310.strategy.OurHashMapStorageStrategy;
 import com.javarush.task.task33.task3310.strategy.StorageStrategy;
 
 import java.util.Date;
@@ -12,7 +13,10 @@ import java.util.Set;
  */
 public class Solution {
     public static void main(String[] args) {
-        StorageStrategy strategy = new HashMapStorageStrategy();
+        StorageStrategy strategy;
+        strategy = new HashMapStorageStrategy();
+        testStrategy(strategy, 10000);
+        strategy = new OurHashMapStorageStrategy();
         testStrategy(strategy, 10000);
     }
 
