@@ -20,8 +20,8 @@ public class HashMapStorageStrategy implements StorageStrategy {
     }
 
     @Override
-    public void put(Long id, String value) {
-        data.put(id, value);
+    public void put(Long key, String value) {
+        data.put(key, value);
     }
 
     @Override

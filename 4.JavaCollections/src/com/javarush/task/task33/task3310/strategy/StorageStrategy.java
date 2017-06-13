@@ -8,7 +8,7 @@ public interface StorageStrategy {
 
     boolean containsValue(String value);
 
-    void put(Long id, String value);
+    void put(Long key, String value);
 
     Long getKey(String value);
 
