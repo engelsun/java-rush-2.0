@@ -20,6 +20,8 @@ public class Solution {
         testStrategy(strategy, 300);
         strategy = new OurHashBiMapStorageStrategy();
         testStrategy(strategy, 10000);
+        strategy = new HashBiMapStorageStrategy();
+        testStrategy(strategy, 10000);
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings) {
