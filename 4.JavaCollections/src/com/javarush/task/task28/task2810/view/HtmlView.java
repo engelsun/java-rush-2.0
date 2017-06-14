@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class HtmlView implements View {
     private Controller controller;
+    private final String filePath = "E:\\programming\\java\\projects\\JavaRushTasks\\4.JavaCollections\\src\\com\\javarush\\task\\task28\\task2810\\view\\vacancies.html";
 
     protected Document getDocument() throws IOException {
         return Jsoup.parse(new File(filePath), "UTF-8");
     }
 
-    private final String filePath = "./src/" + this.getClass().getPackage().getName().replace('.', '/') + "/vacancies.html";
 
     private String getUpdatedFileContent(List<Vacancy> vacancies) {
         Document doc = null;
@@ -76,6 +76,6 @@ public class HtmlView implements View {
     }
 
     public void userCitySelectEmulationMethod() {
-        controller.onCitySelect("Odessa");
+        controller.onCitySelect("Moscow");
     }
 }
