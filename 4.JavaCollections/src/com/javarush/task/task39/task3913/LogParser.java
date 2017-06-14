@@ -1,5 +1,6 @@
 package com.javarush.task.task39.task3913;
 
+import com.javarush.task.task39.task3913.query.DateQuery;
 import com.javarush.task.task39.task3913.query.IPQuery;
 import com.javarush.task.task39.task3913.query.UserQuery;
 
@@ -15,7 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class LogParser implements IPQuery, UserQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery {
     private Path logDir;
 
     public LogParser(Path logDir) {
@@ -137,6 +138,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public int getNumberOfUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -147,6 +149,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users.size();
     }
+
     @Override
     public int getNumberOfUserEvents(String user, Date after, Date before) {
         Set<Event> set = new HashSet<>();
@@ -157,6 +160,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return set.size();
     }
+
     @Override
     public Set<String> getUsersForIP(String ip, Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -167,6 +171,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getLoggedUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -177,6 +182,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getDownloadedPluginUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -187,6 +193,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getWroteMessageUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -197,6 +204,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getSolvedTaskUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -207,6 +215,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getSolvedTaskUsers(Date after, Date before, int task) {
         Set<String> users = new HashSet<>();
@@ -221,6 +230,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getDoneTaskUsers(Date after, Date before) {
         Set<String> users = new HashSet<>();
@@ -231,6 +241,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     @Override
     public Set<String> getDoneTaskUsers(Date after, Date before, int task) {
         Set<String> users = new HashSet<>();
@@ -244,6 +255,111 @@ public class LogParser implements IPQuery, UserQuery {
             }
         }
         return users;
+    }
+
+    @Override
+    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before) {
+        Set<Date> dates = new HashSet<>();
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate()) && user.equals(record.getUser()) && record.getEvent().equals(event)) {
+                dates.add(record.date);
+            }
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
+        Set<Date> dates = new HashSet<>();
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate()) && record.getStatus().equals(Status.FAILED)) {
+                dates.add(record.date);
+            }
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
+        Set<Date> dates = new HashSet<>();
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate()) && record.getStatus().equals(Status.ERROR)) {
+                dates.add(record.date);
+            }
+        }
+        return dates;
+    }
+
+    @Override
+    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
+        Date date = null;
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate()) && record.getUser().equals(user) && record.getEvent().equals(Event.LOGIN)) {
+                if (date == null) date = record.getDate();
+                else date = date.compareTo(record.getDate()) > 0 ? record.getDate() : date;
+            }
+        }
+        return date;
+    }
+
+    @Override
+    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
+        Date date = null;
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate())
+                    && record.getUser().equals(user)
+                    && record.getEvent().equals(Event.SOLVE_TASK)
+                    && record.getTaskNumber() != null
+                    && !record.getTaskNumber().isEmpty()
+                    && Integer.parseInt(record.getTaskNumber()) == task) {
+                if (date == null) date = record.getDate();
+                else date = date.compareTo(record.getDate()) > 0 ? record.getDate() : date;
+            }
+        }
+        return date;
+    }
+
+    @Override
+    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
+        Date date = null;
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate())
+                    && record.getUser().equals(user)
+                    && record.getEvent().equals(Event.DONE_TASK)
+                    && record.getTaskNumber() != null
+                    && !record.getTaskNumber().isEmpty()
+                    && Integer.parseInt(record.getTaskNumber()) == task) {
+                if (date == null) date = record.getDate();
+                else date = date.compareTo(record.getDate()) > 0 ? record.getDate() : date;
+            }
+        }
+        return date;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
+        Set<Date> dates = new HashSet<>();
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate())
+                    && record.getUser().equals(user)
+                    && record.getEvent().equals(Event.WRITE_MESSAGE)) {
+                dates.add(record.date);
+            }
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
+        Set<Date> dates = new HashSet<>();
+        for (LogRecord record : getParsedRecords(logDir)) {
+            if (isDateInside(after, before, record.getDate())
+                    && record.getUser().equals(user)
+                    && record.getEvent().equals(Event.DOWNLOAD_PLUGIN)) {
+                dates.add(record.date);
+            }
+        }
+        return dates;
     }
 
     private boolean isFieldMatch(String field, String value, LogRecord record) throws ParseException {
@@ -274,6 +390,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return criteria;
     }
+
     private Set<String> getAllIps(String field, String value, Date after, Date before) {
         Set<String> users = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -287,6 +404,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     private Set<Date> getAllDates(String field, String value, Date after, Date before) {
         Set<Date> dates = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -300,6 +418,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return dates;
     }
+
     private Set<Status> getAllStatuses(String field, String value, Date after, Date before) {
         Set<Status> set = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -313,6 +432,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return set;
     }
+
     private Set<Event> getAllEvents(String field, String value, Date after, Date before) {
         Set<Event> set = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -326,6 +446,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return set;
     }
+
     private Set<String> getAllUsers(String field, String value, Date after, Date before) {
         Set<String> users = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -339,6 +460,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return users;
     }
+
     private Set<String> getIpSet(Object recordField, Date after, Date before) {
         Set<String> ipSet = new HashSet<>();
         for (LogRecord record : getParsedRecords(logDir)) {
@@ -348,6 +470,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return ipSet;
     }
+
     private List<LogRecord> getParsedRecords(Path logDir) {
         List<LogRecord> recordList = new ArrayList<>();
         try {
@@ -362,6 +485,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return recordList;
     }
+
     private boolean isFieldMatch(Object recordField, LogRecord record) {
         boolean criteria = false;
         if (recordField == null)
@@ -374,6 +498,7 @@ public class LogParser implements IPQuery, UserQuery {
             criteria = record.getStatus().equals(recordField);
         return criteria;
     }
+
     private boolean isDateInside(Date after, Date before, Date currentDate) {
         if (after != null) {
             if (currentDate.getTime() < after.getTime())
@@ -385,6 +510,7 @@ public class LogParser implements IPQuery, UserQuery {
         }
         return true;
     }
+
     private class LogRecord {
         private String ip;
         private String user;
@@ -392,6 +518,7 @@ public class LogParser implements IPQuery, UserQuery {
         private Event event;
         private String taskNumber;
         private Status status;
+
         public LogRecord(String ip, String user, Date date, Event event, Status status) {
             this.ip = ip;
             this.user = user;
@@ -399,6 +526,7 @@ public class LogParser implements IPQuery, UserQuery {
             this.event = event;
             this.status = status;
         }
+
         public LogRecord(String record) {
             String[] strings = record.split("\t");
             this.ip = strings[0].trim();
@@ -414,21 +542,27 @@ public class LogParser implements IPQuery, UserQuery {
             if (eventAndParameter.length > 1) taskNumber = eventAndParameter[1];
             status = Status.valueOf(strings[4]);
         }
+
         public String getIp() {
             return ip;
         }
+
         public String getUser() {
             return user;
         }
+
         public Date getDate() {
             return date;
         }
+
         public Event getEvent() {
             return event;
         }
+
         public String getTaskNumber() {
             return taskNumber;
         }
+
         public Status getStatus() {
             return status;
         }
