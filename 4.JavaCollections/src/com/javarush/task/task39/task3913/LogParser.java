@@ -1,9 +1,6 @@
 package com.javarush.task.task39.task3913;
 
-import com.javarush.task.task39.task3913.query.DateQuery;
-import com.javarush.task.task39.task3913.query.EventQuery;
-import com.javarush.task.task39.task3913.query.IPQuery;
-import com.javarush.task.task39.task3913.query.UserQuery;
+import com.javarush.task.task39.task3913.query.*;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -16,8 +13,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     private Path logDir;
 
     public LogParser(Path logDir) {
@@ -483,6 +482,61 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
             }
         }
         return taskSolved;
+    }
+
+    @Override
+    public Set<Object> execute(String query) {
+        Set<Object> res = new HashSet<>();
+        if (query == null || query.isEmpty()) return res;
+        Pattern p = Pattern.compile("get (ip|user|date|event|status)"
+                + "( for (ip|user|date|event|status) = \"(.*?)\")?"
+                + "( and date between \"(.*?)\" and \"(.*?)\")?");
+        Matcher m = p.matcher(query);
+        String field1 = null;
+        String field2 = null;
+        String value1 = null;
+        Date dateFrom = null;
+        Date dateTo = null;
+        if (m.find()) {
+            field1 = m.group(1);
+            field2 = m.group(3);
+            value1 = m.group(4);
+            String d1 = m.group(6);
+            String d2 = m.group(7);
+            try {
+                dateFrom = new SimpleDateFormat("d.M.yyyy H:m:s").parse(d1);
+            } catch (Exception e) {
+                dateFrom = null;
+            }
+            try {
+                dateTo = new SimpleDateFormat("d.M.yyyy H:m:s").parse(d2);
+            } catch (Exception e) {
+                dateTo = null;
+            }
+            switch (field1) {
+                case "ip": {
+                    res.addAll(getAllIps(field2, value1, dateFrom, dateTo));
+                    break;
+                }
+                case "user": {
+                    res.addAll(getAllUsers(field2, value1, dateFrom, dateTo));
+                    break;
+                }
+                case "date": {
+                    res.addAll(getAllDates(field2, value1, dateFrom, dateTo));
+                    break;
+                }
+                case "event": {
+                    res.addAll(getAllEvents(field2, value1, dateFrom, dateTo));
+                    break;
+                }
+                case "status": {
+                    res.addAll(getAllStatuses(field2, value1, dateFrom, dateTo));
+                    break;
+                }
+            }
+        }
+        return res;
     }
 
     private boolean isFieldMatch(String field, String value, LogRecord record) throws ParseException {
