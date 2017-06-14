@@ -3,6 +3,10 @@ package com.javarush.task.task28.task2810.view;
 import com.javarush.task.task28.task2810.Controller;
 import com.javarush.task.task28.task2810.vo.Vacancy;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -18,6 +22,13 @@ public class HtmlView implements View {
     }
 
     private void updateFile(String s) {
+        try (OutputStream outputStream = new FileOutputStream(filePath)) {
+            outputStream.write(s.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
