@@ -5,7 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,18 +13,18 @@ import java.util.List;
  */
 public class HHStrategy implements Strategy {
     private static final String URL_FORMAT = "http://hh.ua/search/vacancy?text=java+%s&page=%d";
-
-    protected Document getDocument(String searchString, int page) throws IOException {
-        String url = String.format(URL_FORMAT, searchString, page);
-        Document document = Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                .referrer("none")
-                .get();
-        return document;
-    }
+    String userAgent = "Mozilla/5.0";
+    String referrer = "http://google.ru";
 
     @Override
-    public List<Vacancy> getVacancies(String searchString) {
-        return Collections.emptyList();
+    public List<Vacancy> getVacancies(String searchString){
+        List<Vacancy> list = new ArrayList<>();
+        int page = 1;
+        try {
+            Document document = Jsoup.connect(URL_FORMAT).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
