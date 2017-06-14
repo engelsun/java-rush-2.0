@@ -17,11 +17,14 @@ public class HHStrategy implements Strategy {
     String referrer = "http://google.ru";
 
     @Override
-    public List<Vacancy> getVacancies(String searchString){
+    public List<Vacancy> getVacancies(String searchString) {
         List<Vacancy> list = new ArrayList<>();
         int page = 1;
         try {
-            Document document = Jsoup.connect(URL_FORMAT).get();
+            Document document = Jsoup.connect(URL_FORMAT)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
+                    .referrer("http://www.google.com")
+                    .get();
         } catch (IOException e) {
             e.printStackTrace();
         }
