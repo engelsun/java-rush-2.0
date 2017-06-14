@@ -1,9 +1,12 @@
 package com.javarush.task.task28.task2810.model;
 
+import com.javarush.task.task28.task2810.vo.Vacancy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by engelsun on 6/15/2017.
@@ -18,5 +21,10 @@ public class HHStrategy implements Strategy {
                 .referrer("none")
                 .get();
         return document;
+    }
+
+    @Override
+    public List<Vacancy> getVacancies(String searchString) {
+        return Collections.emptyList();
     }
 }

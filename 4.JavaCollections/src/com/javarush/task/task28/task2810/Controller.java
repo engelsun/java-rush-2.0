@@ -1,8 +1,10 @@
 package com.javarush.task.task28.task2810;
 
 import com.javarush.task.task28.task2810.model.Provider;
+import com.javarush.task.task28.task2810.vo.Vacancy;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by engelsun on 6/15/2017.
@@ -10,11 +12,10 @@ import java.util.Arrays;
 public class Controller {
     private Provider[] providers;
 
-    public Controller(Provider... providers) throws IllegalArgumentException {
-        if (providers.length==0) throw new IllegalArgumentException ();
-
-        this.providers = new Provider [providers.length];
-        System.arraycopy(providers,0,this.providers,0,providers.length);
+    public Controller(Provider... providers) {
+        if (providers == null || providers.length == 0)
+            throw new IllegalArgumentException();
+        this.providers = providers;
     }
 
     @Override
@@ -22,5 +23,17 @@ public class Controller {
         return "Controller{" +
                 "providers=" + Arrays.toString(providers) +
                 '}';
+    }
+
+    public void scan() {
+        int total = 0;
+        if (providers == null)
+            System.out.println("Hello");
+
+        for (Provider provider : providers) {
+            List<Vacancy> vacancy = provider.getJavaVacancies("java");
+            total += vacancy.size();
+        }
+        System.out.println(total);
     }
 }
