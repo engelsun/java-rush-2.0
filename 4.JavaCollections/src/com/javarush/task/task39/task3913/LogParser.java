@@ -678,11 +678,11 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
 
     private boolean isDateInside(Date after, Date before, Date currentDate) {
         if (after != null) {
-            if (currentDate.getTime() < after.getTime())
+            if (currentDate.getTime() <= after.getTime())
                 return false;
         }
         if (before != null) {
-            if (currentDate.getTime() > before.getTime())
+            if (currentDate.getTime() >= before.getTime())
                 return false;
         }
         return true;
